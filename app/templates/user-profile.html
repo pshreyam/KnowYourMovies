@@ -1,0 +1,80 @@
+{% extends 'layouts/layout.html' %}
+
+{% block body %}
+
+<div class="card">
+  <!-- <div class="card-image">
+      <figure class="image is-4by3">
+        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+      </figure>
+    </div> -->
+
+  {% with messages=get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  {% for category, message in messages %}
+  {% set message_class = 'is-success' %}
+  {% if category == 'error' %}
+  {% set message_class = 'is-danger' %}
+  {% elif category == 'info' %}
+  {% set message_class = 'is-info' %}
+  {% endif %}
+  <div class="notification {{ message_class }} ">
+    {{ message }}
+  </div>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+  <div class="card-content">
+    <div class="media">
+      <div class="media-left">
+        <figure class="image is-64x64">
+          <img class="is-rounded" src="{{user_details.profile_pic}}"
+            alt="Placeholder image">
+        </figure>
+      </div>
+      <div class="media-content">
+        <p class="title is-4">{{user_details.fullname}}</p>
+        <p class="subtitle is-6">@{{user_details.username}}</p>
+      </div>
+    </div>
+    <div>
+      <a href="{{url_for('edit_user')}}">
+        <button class="button is-danger">Edit</button>
+      </a>
+      <a href="{{url_for('public_user_profile', username=user_details.username)}}">
+        <button class="button is-info">View Public Profile</button>
+      </a>
+    </div>
+    <br>
+    <div class="content">
+      <div class="tags has-addons">
+        <a href="{{url_for('user_following')}}">
+          <span class="tag">Following</span>
+        </a>
+        <span class="tag is-primary">{{following}}</span>
+      </div>
+      <div class="tags has-addons">
+        <a href="{{url_for('user_followers')}}">
+          <span class="tag">Followers</span>
+        </a>
+        <span class="tag is-primary">{{followers}}</span>
+      </div>
+      <div class="tags has-addons">
+        <span class="tag">Email</span>
+        <span class="tag is-primary">{{user_details.email}}</span>
+      </div>
+      <div class="tags has-addons">
+        <span class="tag">Gender</span>
+        <span class="tag is-primary">
+          {% if user_details.gender == 'M' %}
+          Male
+          {% else %}
+          Female
+          {% endif %}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{%extends 'layouts/layout.html'%}
+
+{% block body %}
+
+<nav class="breadcrumb has-arrow-separator is-medium" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="{{url_for('get_movies')}}">movies</a></li>
+    <li class="is-active"><a href="#" aria-current="page">{{category}}</a></li>
+  </ul>
+</nav>
+
+{% for movie in movies %}
+<div class="box">
+  <article class="media">
+    <div class="media-left">
+      <figure class="image is-64x64">
+        <img src="data:;base64,{{movie.image}}" alt="Image">
+      </figure>
+    </div>
+    <div class="media-content">
+      <div class="content">
+        <p>
+          <a href="{{url_for('movie_details', category=category, movie_id=movie.id)}}">
+            <strong>{{movie.title}}</strong>
+          </a>
+          <small>{{movie.director}}</small>
+          <br>
+          {{movie.genre}}
+          <br>
+          <time datetime="2016">{{movie.year}}</time>
+        </p>
+      </div>
+      <nav class="level is-mobile">
+        {% if category == 'imdb' %}
+        <div class="level-left">
+          <a class="level-item" aria-label="like" href="{{url_for('select_movies',
+                        movie_id=movie.id)}}">
+            <span class="icon is-small">
+              <i class="fas fa-heart" aria-hidden="true"></i>
+            </span>
+          </a>
+        </div>
+        {% endif %}
+      </nav>
+    </div>
+  </article>
+</div>
+{% endfor %}
+{% endblock %}

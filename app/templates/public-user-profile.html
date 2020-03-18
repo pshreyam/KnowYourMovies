@@ -1,0 +1,119 @@
+{% extends 'layouts/layout.html' %}
+
+{% block body %}
+
+<div class="card">
+  {% with messages=get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  {% for category, message in messages %}
+  {% set message_class = 'is-success' %}
+  {% if category == 'error' %}
+  {% set message_class = 'is-danger' %}
+  {% endif %}
+  <div class="notification {{ message_class }} ">
+    {{ message }}
+  </div>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+  <div class="card-content">
+    <div class="media">
+      <div class="media-left">
+        <figure class="image is-64x64">
+          <img class="is-rounded" src="{{user_details.profile_pic}}"
+            width="64" height="64" alt="Placeholder image">
+        </figure>
+      </div>
+      <a href="{{url_for('public_user_profile',username=user_details.username)}}">
+        <div class="media-content">
+          <p class="title is-4">{{user_details.fullname}}</p>
+          <p class="subtitle is-6">@{{user_details.username}}</p>
+        </div>
+      </a>
+    </div>
+
+    {% if not is_current_user %}
+    <div>
+      {% if user_details.id not in following_id_list %}
+      <a href="{{url_for('follow_user', username=user_details.username)}}">
+        <button class="button is-info">Follow</button>
+      </a>
+      {% else %}
+      <a href="{{url_for('unfollow_user', username=user_details.username)}}">
+        <button class="button is-info">Unfollow</button>
+      </a>
+      {% endif %}
+    </div>
+    <br>
+    {% endif %}
+
+    <div class="content">
+      <div class="tags has-addons">
+        <span class="tag">Following</span>
+        <span class="tag is-primary">{{following}}</span>
+      </div>
+      <div class="tags has-addons">
+        <span class="tag">Followers</span>
+        <span class="tag is-primary">{{followers}}</span>
+      </div>
+      <div class="tags has-addons">
+        <span class="tag">Email</span>
+        <span class="tag is-primary">{{user_details.email}}</span>
+      </div>
+      <div class="tags has-addons">
+        <span class="tag">Gender</span>
+        <span class="tag is-primary">
+          {% if user_details.gender == 'M' %}
+          Male
+          {% else %}
+          Female
+          {% endif %}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+{% if movies_liked %}
+<h3 class="title is-3">
+  Movies liked by @{{user_details.username}}!
+</h3>
+{% for movie in movies_liked %}
+<div class="box">
+  <article class="media">
+    <div class="media-left">
+      <figure class="image is-64x64">
+        <img src="data:;base64,{{movie.image}}" alt="Image">
+      </figure>
+    </div>
+    <div class="media-content">
+      <div class="content">
+        <p>
+          <a href="{{url_for('movie_details',
+                    category='imdb', movie_id=movie.id)}}">
+            <strong>{{movie.title}}</strong>
+          </a>
+          <small>{{movie.director}}</small>
+          <br>
+          {{movie.genre}}
+          <br>
+          <time datetime="2016">{{movie.year}}</time>
+        </p>
+      </div>
+      <nav class="level is-mobile">
+        <!-- <div class="level-left">
+                <a class="level-item" aria-label="like">
+                <span class="icon is-small">
+                    <i class="fas fa-heart" aria-hidden="true"></i>
+                </span>
+                </a>
+            </div> -->
+      </nav>
+    </div>
+  </article>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock %}

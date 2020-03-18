@@ -1,0 +1,10 @@
+{% extends 'layouts/layout.html' %}
+
+{% block body %}
+<div class="columns is-vcentered">
+    <div class="column is-three-fifths is-offset-one-fifth">
+        <h1 class="title is-1">Oops! the page you requested is not available at this moment.</h1>
+        <img src="{{url_for('static',filename='img/sorry-banner.png')}}">
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>CORONA MOVIES</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel='icon' href="{{url_for('static',filename='img/logo.png')}}" type='image/x-icon'>
+</head>
+
+<body>
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		.container {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+		}
+
+		.display {
+			height: 500px;
+			width: 700px;
+			position: absolute;
+			top: 50%;
+			left: 100px;
+			transform: translateY(-50%);
+			padding: 10%;
+			box-shadow: 0 0 20px 2px blue;
+			border-radius: 20px;
+			background: white;
+		}
+
+		.display .title {
+			font-size: 30px;
+		}
+
+		.display .content {
+			margin-top: 15px;
+			font-size: 16px;
+		}
+
+		.display .content p {
+			word-wrap: normal;
+			text-indent: none;
+		}
+
+		.login-box {
+			background-color: blue;
+			width: 300px;
+			height: 400px;
+			position: absolute;
+			left: 1100px;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			border-radius: 10px 60px 10px 60px;
+			box-shadow: 0 0 20px 5px black;
+		}
+
+		.login-box .logobox {
+			position: absolute;
+			top: 10px;
+			left: 50%;
+			width: 100px;
+			height: 100px;
+			border-radius: 50%;
+			border: 1px solid black;
+			transform: translateX(-50%);
+			background-color: white;
+			user-select: none;
+			box-shadow: 0 0 20px 0 #000;
+		}
+
+		.login-box .logobox img {
+			padding: 5%;
+			width: 95%;
+			height: 95%;
+		}
+
+		.login-box .input-area {
+			width: 80%;
+			height: 150px;
+			position: absolute;
+			top: 120px;
+			left: 10%;
+		}
+
+		.login-box #error {
+			width: 80%;
+			height: 25px;
+			position: absolute;
+			top: 260px;
+			left: 10%;
+			color: white;
+			font-size: 16px;
+			text-align: center;
+		}
+
+		.login-box input[type=submit] {
+			width: 70%;
+			height: 40px;
+			position: absolute;
+			top: 290px;
+			left: 15%;
+			border-radius: 6px;
+			cursor: pointer;
+		}
+
+		.login-box .link {
+			color: black;
+			text-decoration: none;
+			border: 1px solid #ddd;
+			width: 30% auto;
+			height: 40px;
+			position: absolute;
+			top: 340px;
+			left: 50%;
+			transform: translateX(-50%);
+			border-radius: 6px;
+			padding: 10px;
+			background-color: #eee;
+			box-shadow: 0 0 5px 0 inset #000;
+		}
+
+		.login-box .input-area input {
+			width: 100%;
+			height: 40px;
+			margin: 10px 0;
+			border-radius: 6px;
+			padding: 0 10px;
+		}
+	</style>
+	<div class="container">
+		<div class="login-box">
+			<form action="/login" method="post">
+				<a href='/'>
+					<div class="logobox">
+						<!--<img src="./static/img/logo.png" />-->
+						Movies
+					</div>
+				</a>
+				<div class="input-area">
+					<input type="text" value="" name="username" id="username" placeholder="Username" maxlength="20"
+						spellcheck="false" required>
+					<input type="password" value="" name="password" id="password" placeholder="Password" required>
+				</div>
+				<input type="submit" value="Login">
+				<a href='/register' class='link'>or Register</a>
+				<span id='error'>
+					{%if error%}
+					{{error}}
+					{%else%}
+					Log in to continue.
+					{%endif%}
+				</span>
+			</form>
+		</div>
+		<div class="display">
+			<div class="title">
+				Welcome to .....
+			</div>
+			<div class="content">
+				<p>
+					It is a simple site to get the details about top movies as rated by Imdb. Also, it categorises the
+					movies on the basis of some genre or languages.
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<body>
+
+</html>

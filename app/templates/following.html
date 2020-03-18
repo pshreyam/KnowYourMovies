@@ -1,0 +1,67 @@
+{% extends 'layouts/layout.html' %}
+
+{% block body %}
+
+{% with messages=get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+{% set message_class = 'is-success' %}
+{% if category == 'error' %}
+{% set message_class = 'is-danger' %}
+{% elif category == 'info' %}
+{% set message_class = 'is-info' %}
+{% endif %}
+<div class="notification {{ message_class }} ">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<h3 class="title is-3">
+    Following
+</h3>
+
+
+{% if following %}
+<div class="card">
+    <div class="card-content">
+        <h5 class="title is-5">
+            {{following|length}} following
+        </h5>
+    </div>
+    {% for people in following %}
+    <div class="card-content">
+        <div class="media">
+            <div class="media-left">
+                <figure class="image is-64x64">
+                    <img class="is-rounded" src="{{people.profile_pic}}" width="64" height="64"
+                        alt="Placeholder image">
+                </figure>
+            </div>
+            <div class="media-content">
+                <a href="{{url_for('public_user_profile', username=people.username)}}">
+                    <p class="title is-4">
+                        {{people.fullname}}
+                    </p>
+                    <p class="subtitle is-6">
+                        @{{people.username}}
+                    </p>
+                </a>
+            </div>
+        </div>
+        <div>
+            <a href="{{url_for('unfollow_user', username=people.username)}}">
+                <button class="button is-info">Unfollow</button>
+            </a>
+        </div>
+        <hr>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<h5 class="title is-5">
+    Sorry! You aren't following anyone!
+</h5>
+{% endif %}
+{% endblock %}

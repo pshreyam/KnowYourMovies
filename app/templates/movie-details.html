@@ -1,0 +1,74 @@
+{%extends 'layouts/layout.html'%}
+
+{%block body%}
+
+<nav class="breadcrumb has-arrow-separator is-medium" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="{{url_for('get_movies')}}">movies</a></li>
+    <li><a href="{{url_for('get_movies', category=category)}}">{{category}}</a></li>
+    <li class="is-active"><a href="#" aria-current="page">{{movie.title}}</a></li>
+  </ul>
+</nav>
+
+<div class="card">
+  <div class="card-content">
+    <div class="media">
+      <div class="media-left">
+        <figure class="image is-64x64">
+          <img src="data:;base64,{{movie.image}}">
+        </figure>
+      </div>
+      <div class="media-content">
+        <p class="title is-4">{{movie.title}} ({{movie.year}})</p>
+        <p class="subtitle is-6">{{movie.director}}</p>
+      </div>
+    </div>
+    <br>
+    <div class="content">
+      {{movie.synopsis}}
+    </div>
+
+    {% if movie.trailerurl or movie.movieurl %}
+    <div class="tags">
+
+      {% if movie.trailerurl %}
+      <a href="{{movie.trailerurl}}" target="_blank">
+        <span class="tag is-danger is-medium">Trailer</span>
+      </a>
+      {% endif %}
+      &nbsp;&nbsp;
+      {% if movie.movieurl %}
+      <a href="{{movie.movieurl}}" target="_blank">
+        <span class="tag is-danger is-medium">Movie</span>
+      </a>
+      {% endif %}
+
+    </div>
+    {% endif %}
+
+    <div class="tags">
+      {% if movie.genre %}
+      {% for tag in movie.genre.split('/') %}
+      <span class="tag is-info">{{tag}}</span>
+      {% endfor %}
+      {% endif %}
+    </div>
+
+    {% if category == 'imdb' %}
+    <div class="tags has-addons">
+      <span class="tag is-info is-success is-medium">Like</span>
+      <span class="tag is-primary is-medium">
+        <span class="level-left">
+          <a class="level-item" aria-label="like" href="{{url_for('select_movies', movie_id=movie.id)}}">
+            <span class="icon is-small">
+              <i class="fas fa-heart has-text-danger" aria-hidden="true"></i>
+            </span>
+          </a>
+        </span>
+      </span>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+{%endblock%}

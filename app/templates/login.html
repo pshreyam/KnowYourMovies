@@ -1,0 +1,62 @@
+{%extends 'layouts/layout.html'%}
+
+{%block body%}
+
+<div class="columns is-vcentered py-5">
+    <div class="column">
+        <form action="{{url_for('login')}}" method="POST">
+            <h4 class="title is-4">Login</h2>
+
+                {% with messages=get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                {% set message_class = 'is-success' %}
+                {% if category == 'error' %}
+                {% set message_class = 'is-danger' %}
+                {% endif %}
+                <div class="notification {{ message_class }} ">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+
+                <div class="field">
+                    <label class="label">Username</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input class="input" type="text" name="username" placeholder="Username">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                        <!-- <span class="icon is-small is-right">
+                    <i class="fas fa-check"></i>
+                    </span> -->
+                    </div>
+                    <!-- <p class="help is-success">This username is available</p> -->
+                </div>
+
+                <div class="field">
+                    <label class="label">Password</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input class="input" type="password" name="password" autocomplete="current-password"
+                            placeholder="Password">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button type='submit' class="button is-link">Login</button>
+                    </div>
+                </div>
+        </form>
+
+    </div>
+    <div class="column is-two-thirds">
+        <img src="{{ url_for('static', filename='img/banner.png') }}" \>
+    </div>
+</div>
+
+{%endblock%}
